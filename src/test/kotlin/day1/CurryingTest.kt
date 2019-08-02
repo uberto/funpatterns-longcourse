@@ -8,9 +8,24 @@ import java.util.*
 
 class CurryingTest {
 
+    fun sum(num1: Int, num2: Int) = num1 + num2
+
     fun strConcat(s1: String, s2: String) = s1+s2
 
     data class Person( val creation: Date, val isCustomer: Boolean, val id: Int, val name: String )
+
+
+    @Test
+    fun `currying sum`(){
+
+        val plus3 = ::sum.curry()(3)
+
+        val plus7 = ::sum.curry()(7)
+
+        assertThat(plus3( plus7(5))).isEqualTo(15)
+
+    }
+
 
     @Test
     fun `currying concat`(){
@@ -40,7 +55,7 @@ class CurryingTest {
     fun `creating People`(){
 
         val personPartBuilder =
-            CurryingTest::Person.curry()   `@` Date() `@` true
+            CurryingTest::Person.curry()  `@` Date() `@` true
 
         val name = listOf("Fred", "Mary", "Ann", "Bob")
 
@@ -48,7 +63,6 @@ class CurryingTest {
             personPartBuilder(i)(n)
         }
 
-        println(people)
 
         assertThat(people).hasSize(name.size)
 
