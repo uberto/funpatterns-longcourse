@@ -40,4 +40,17 @@ class JsonCompactorTest {
         assertThat(compactJson(jsonText)).isEqualTo(expected)
 
     }
+
+
+
+    @Test
+    fun `keep quote in quotes`(){
+
+        val jsonText = """{ "my greetings" :   "hello \"world\"" }""".asSequence()
+
+        val expected = """{"my greetings":"hello \"world\""}"""
+
+        assertThat(compactJson(jsonText)).isEqualTo(expected)
+
+    }
 }

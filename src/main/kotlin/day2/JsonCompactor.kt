@@ -20,6 +20,8 @@ data class InQuotes(override val jsonCompacted: String): JsonCompactor() {
     override fun compact(c: Char): JsonCompactor =
         if (c == '"')
             OutQuotes(jsonCompacted + c)
+        else if (c == '\\')
+            Escaped(jsonCompacted + c)
         else
             InQuotes(jsonCompacted + c)
 }
@@ -32,4 +34,9 @@ data class OutQuotes(override val jsonCompacted: String): JsonCompactor() {
             InQuotes(jsonCompacted + c)
         else
             OutQuotes(jsonCompacted + c)
+}
+
+data class Escaped(override val jsonCompacted: String): JsonCompactor() {
+    override fun compact( c: Char): JsonCompactor =
+        InQuotes(jsonCompacted + c)
 }
