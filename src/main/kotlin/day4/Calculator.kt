@@ -8,13 +8,19 @@ data class Calculator(
     operator fun invoke() {
         val cmd: String = reader().exec()
 
+        val res = execute(cmd)
+
+        writer(res).exec()
+    }
+
+    private fun execute(cmd: String): String {
         val elements = cmd.split(" ")
         val res = if (elements.size != 3) {
             "Syntax Error $cmd"
         } else {
             operation(elements[0], elements[1], elements[2])
         }
-        writer(res).exec()
+        return res
     }
 
     fun operation(op: String, a: String, b: String): String {
