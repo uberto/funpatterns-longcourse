@@ -6,7 +6,7 @@ interface Writer<T> {
 }
 
 
-interface Reader<T> {
-    fun <U> runReader(lineReader: (T) -> U): List<U>
+interface Reader<T, U> {
+    fun ask(what: T): U
 }
 
