@@ -7,24 +7,17 @@ import org.junit.jupiter.api.fail
 
 class OutcomeTest {
 
-    data class DbError(override val msg: String) : Error
-
-    data class Order(val id: Int, val userId: Int, val amount: Double)
-
-    data class User(val id: Int, val name: String)
-
-
-    fun readOrderFromDb(orderId: Int): Outcome<DbError, Order> =
+    fun readOrderFromDb(orderId: OrderId): Outcome<DbError, Order> =
         if (orderId == existingOrderId)
-            Success(Order(existingOrderId, 123, 123.4))
+            Success(Order( existingOrderId, UserId(123), 123.4))
         else
             Failure(DbError("order $orderId does not exist"))
 
-    fun readUserFromDb(id: Int): Outcome<DbError, User> =
+    fun readUserFromDb(id: UserId): Outcome<DbError, User> =
         Success(User(id, "Joe"))
 
-    val existingOrderId = 123
-    val notExistingOrderId = 234
+    val existingOrderId = OrderId(123)
+    val notExistingOrderId = OrderId(234)
 
     @Test
     fun `check for error cases`() {

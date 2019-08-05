@@ -11,3 +11,7 @@ out/
 #gradle
 build/
 .gradle
+
+
+
+/names.txt
