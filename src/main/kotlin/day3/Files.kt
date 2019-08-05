@@ -22,36 +22,12 @@ class FileWriter(val fileName: Path): Writer<String> {
 
     }
 
-    override fun runWriter(f: () -> String?) {
-        fileName.toFile().writer().use {
-
-            while (true) {
-                val line = f() ?: return@use
-                it.append("$line\n")
-            }
-        }
-    }
+    override fun runWriter(f: () -> String?) = TODO()
 }
 
 
 
 class FileReader(val fileName: Path) {
 
-    operator fun <T> invoke(lineReader: (String) -> T): Outcome<FileError, List<T>> {
-
-        return runCatching {
-            runReader(lineReader)
-        }.fold(
-            {it.asSuccess()},
-            {FileError(fileName, it).asFailure()})
-
-    }
-
-    fun <U> runReader(lineReader: (String) -> U): List<U> {
-        val collector = mutableListOf<U>()
-        fileName.toFile().reader().forEachLine {
-            collector.add(lineReader(it))
-        }
-        return collector
-    }
+    operator fun <T> invoke(lineReader: (String) -> T): Outcome<FileError, List<T>> = TODO()
 }

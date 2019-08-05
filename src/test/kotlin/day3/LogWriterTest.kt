@@ -8,7 +8,7 @@ class LogWriterTest {
 
     data class Logger(val lines: MutableList<String>) : Writer<String> {
         override fun runWriter(f: () -> String?) {
-            f()?.let { lines.add(it) }
+            TODO()
         }
     }
 

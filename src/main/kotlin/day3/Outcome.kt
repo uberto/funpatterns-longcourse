@@ -4,25 +4,12 @@ package day3
 sealed class  Outcome<out E: Error, out T: Any> {
 
 
-    fun <U: Any> map(f: (T) -> U): Outcome<E, U> =
-        when (this){
-            is Success -> Success(f(this.value))
-            is Failure -> this
-        }
+    fun <U: Any> map(f: (T) -> U): Outcome<E, U> = TODO()
 
-    fun <U: Error> mapFailure(f: (E) -> U): Outcome<U, T> =
-        when (this){
-            is Success -> this
-            is Failure -> Failure(f(this.error))
-        }
+    fun <U: Error> mapFailure(f: (E) -> U): Outcome<U, T> = TODO()
 
     companion object {
-        fun <T: Any> tryThis(block: () -> T): Outcome<ThrowableError, T> =
-            try {
-                Success(block())
-            } catch (e: Throwable){
-                Failure(ThrowableError(e))
-            }
+        fun <T: Any> tryThis(block: () -> T): Outcome<ThrowableError, T> =TODO()
     }
 }
 
@@ -30,26 +17,11 @@ data class Success<T: Any>(val value: T): Outcome<Nothing, T>()
 data class Failure<E: Error>(val error: E): Outcome<E, Nothing>()
 
 
-inline fun <T: Any, U: Any, E: Error> Outcome<E, T>.flatMap(f: (T) -> Outcome<E, U>): Outcome<E, U> =
-    when (this) {
-        is Success<T> -> f(value)
-        is Failure<E> -> this
-    }
+inline fun <T: Any, U: Any, E: Error> Outcome<E, T>.flatMap(f: (T) -> Outcome<E, U>): Outcome<E, U> = TODO()
 
-inline fun <E: Error, T: Any> Outcome<E, T>.mapNullableError(f: (T) -> E?): Outcome<E, Unit> =
-    when (this){
-        is Success<T> -> {
-            val error = f(this.value)
-            if (error == null ) Success(Unit) else Failure(error)
-        }
-        is Failure<E> -> this
-    }
+inline fun <E: Error, T: Any> Outcome<E, T>.mapNullableError(f: (T) -> E?): Outcome<E, Unit> = TODO()
 
-inline fun <T: Any, E: Error> Outcome<E, T>.onFailure(block: (E) -> Nothing): T =
-    when (this) {
-        is Success<T> -> value
-        is Failure<E> -> block(error)
-    }
+inline fun <T: Any, E: Error> Outcome<E, T>.onFailure(block: (E) -> Nothing): T = TODO()
 
 interface Error{
     val msg: String

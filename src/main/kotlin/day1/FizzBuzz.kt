@@ -1,13 +1,10 @@
 package day1
 
-infix fun String?.compose (other: String?): String? =
-    if (this == null) other
-    else if (other == null) this
-    else this.toString() + other.toString()
+infix fun String?.compose (other: String?): String? = TODO()
 
-fun fizz(x:Int): String? = "Fizz".takeIf{x % 3 == 0}
+fun fizz(x:Int): String? = TODO()
 
-fun buzz(x:Int): String? = "Buzz".takeIf{x % 5 == 0}
+fun buzz(x:Int): String? = TODO()
 
 fun fizzBuzz(x: Int): String = fizz(x) compose buzz(x) ?: x.toString()
 

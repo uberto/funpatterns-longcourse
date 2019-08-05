@@ -14,7 +14,7 @@ class ConfigReaderTest {
 
     data class ConfigReader(val f: (String) -> String): Reader<String, String> {
 
-        override fun ask(what: String): String = f(what)
+        override fun ask(what: String): String = TODO()
 
     }
 

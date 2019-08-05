@@ -12,10 +12,7 @@ object RPNCalc {
         return elements.fold(0.0, RPNCalc::rpn)
     }
 
-    private fun rpn(acc: Double, elem: String): Double = elem
-        .toDoubleOrNull()
-        ?.let { stack.push(it); acc }
-        ?: operation(elem, stack.pop(), stack.pop()).also (stack::push)
+    private fun rpn(acc: Double, elem: String): Double = TODO()
 
     private fun operation(op: String, x: Double, y: Double): Double {
         val res = when (op) {

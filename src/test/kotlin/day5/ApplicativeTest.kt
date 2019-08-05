@@ -2,14 +2,11 @@ package day5
 
 
 import day4.Console
-import day4.printIO
-import day4.readlineIO
 
 
-fun qaConsole(showQuestion: Console<Unit>, readAnswer: Console<String>) =
-    Console { showQuestion.andThen(readAnswer).exec() }
+fun qaConsole(showQuestion: Console<Unit>, readAnswer: Console<String>): Console<String> = TODO()
 
-fun question(msg: String): Console<String> = qaConsole(printIO(msg), readlineIO())
+fun question(msg: String): Console<String> = TODO()
 
 data class Person(val name: String, val surname: String, val country: String)
 
@@ -28,18 +25,14 @@ fun main() {
 }
 
 infix fun <A, B> Console<A>.applyOn(other: Console<B>): Console<Pair<A, B>> {
-    return Console({ Pair(this.exec(), other.exec()) })
+    TODO()
 }
 
 
 infix fun <A, B, R> Console<Pair<A, B>>.map2(f: (A, B) -> R): Console<R> {
-    val (a, b) = this.exec()
-
-    return Console({ f(a, b) })
+    TODO()
 }
 
 infix fun <A, B, C, R> Console<Pair<Pair<A, B>, C>>.map3(f: (A, B, C) -> R): Console<R> {
-    val (pair, c) = this.exec()
-    val (a, b) = pair
-    return Console({ f(a, b, c) })
+    TODO()
 }

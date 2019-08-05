@@ -6,12 +6,15 @@ import org.junit.jupiter.api.Test
 
 class ScopeFunctionTest{
 
-    private fun lastWord(phrase: String) = phrase.lastIndexOf(' ').let { if (it < 0) phrase else phrase.substring(it + 1) }
+    private fun lastWord(phrase: String): String =TODO() //implement it in one line
+
+    private fun firstWord(phrase: String): String =TODO() //implement it in one line
+
 
     @Test
     fun `let pass value and return result`(){
 
-        val res = greetings().let { if(it.contains(' ')) lastWord(it) else it }
+        val res = lastWord("hello world")
 
         assertThat(res).isEqualTo("world")
     }
@@ -21,10 +24,9 @@ class ScopeFunctionTest{
     @Test
     fun `run call value method and return result`(){
 
-        val res = greetings().run { substring( 0, indexOf(' ') ) }
+        val res = firstWord("hello world")
 
         assertThat(res).isEqualTo("hello")
     }
 
-    private fun greetings() = "hello world"
 }

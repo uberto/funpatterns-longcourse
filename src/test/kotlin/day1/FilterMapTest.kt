@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 
 class FilterMapTest(){
 
-    fun <T: Any, U> List<T>.filterMap(f: (T) -> U?): List<U> = this.map(f).filterNot { it  == null }.map { it!! }
+    fun <T: Any, U> List<T>.filterMap(f: (T) -> U?): List<U> = TODO()
 
     @Test
     fun `filterMap transform values and remove the null ones`(){

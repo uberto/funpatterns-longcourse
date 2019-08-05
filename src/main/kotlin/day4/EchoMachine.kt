@@ -6,8 +6,6 @@ data class EchoMachine(
 ) {
 
     operator fun invoke() {
-        val msg: String = reader().exec()
-
-        writer(msg).exec()
+        TODO()
     }
 }

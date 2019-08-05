@@ -11,7 +11,7 @@ class FoldTest {
 
         val values = listOf(1,2,3,4,10)
 
-        val tot = values.fold(0){ a,x -> a + x}
+        val tot = values.fold(0, TODO())
 
         assertThat(tot).isEqualTo(20)
     }
@@ -21,7 +21,7 @@ class FoldTest {
 
         val values = "London Bridge Is Falling Down"
 
-        val tot = values.fold(""){ a,c -> if (c == ' ') a else a + c}
+        val tot = values.fold("", TODO())
 
         assertThat(tot).isEqualTo("LondonBridgeIsFallingDown")
     }
@@ -31,7 +31,7 @@ class FoldTest {
 
         val values = "London Bridge Is Falling Down"
 
-        val tot = values.fold(""){ a,c -> c + a}
+        val tot = values.fold("", TODO())
 
         assertThat(tot).isEqualTo("nwoD gnillaF sI egdirB nodnoL")
     }
@@ -43,13 +43,7 @@ class FoldTest {
 
         val values = listOf(Up, Up, Down, Up, Down, Down, Up, Up, Up, Down)
 
-        val tot = values.fold(Elevator(0)){ e,d ->
-
-            when (d){
-                Up -> Elevator(e.floor + 1)
-                Down -> Elevator(e.floor - 1)
-            }
-        }
+        val tot = values.fold(Elevator(0), TODO())
 
         assertThat(tot).isEqualTo(Elevator(2))
     }

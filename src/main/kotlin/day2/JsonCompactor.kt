@@ -17,26 +17,13 @@ sealed class JsonCompactor{
 }
 
 data class InQuotes(override val jsonCompacted: String): JsonCompactor() {
-    override fun compact(c: Char): JsonCompactor =
-        if (c == '"')
-            OutQuotes(jsonCompacted + c)
-        else if (c == '\\')
-            Escaped(jsonCompacted + c)
-        else
-            InQuotes(jsonCompacted + c)
+    override fun compact(c: Char): JsonCompactor = TODO()
 }
 
 data class OutQuotes(override val jsonCompacted: String): JsonCompactor() {
-    override fun compact( c: Char): JsonCompactor =
-        if ( c in arrayOf(' ', '\n', '\t'))
-            this
-        else if (c == '"')
-            InQuotes(jsonCompacted + c)
-        else
-            OutQuotes(jsonCompacted + c)
+    override fun compact(c: Char): JsonCompactor = TODO()
 }
 
 data class Escaped(override val jsonCompacted: String): JsonCompactor() {
-    override fun compact( c: Char): JsonCompactor =
-        InQuotes(jsonCompacted + c)
+    override fun compact(c: Char): JsonCompactor = TODO()
 }
