@@ -1,4 +1,4 @@
-package day1
+package day2
 
 import java.util.*
 
@@ -9,7 +9,7 @@ object RPNCalc {
     fun calc(cmd: String): Double {
         val elements = cmd.split(" ")
 
-        return elements.fold(0.0, ::rpn)
+        return elements.fold(0.0, RPNCalc::rpn)
     }
 
     private fun rpn(acc: Double, elem: String): Double = elem

@@ -1,4 +1,4 @@
-package day2
+package day1
 
 infix fun String?.compose (other: String?): String? =
     if (this == null) other
