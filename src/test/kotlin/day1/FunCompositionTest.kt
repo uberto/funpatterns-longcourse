@@ -14,11 +14,11 @@ class FunCompositionTest {
 
 
     @Test
-    fun `f on g is equivalent to f(g())`(){
+    fun `f compose g is equivalent to f(g())`(){
 
         val r = inc(double(5)) //11
 
-        val newFun = ::inc on ::double
+        val newFun = ::inc compose ::double
 
         assertThat(newFun(5)).isEqualTo(r)
 
@@ -29,7 +29,7 @@ class FunCompositionTest {
 
         val r = inc(strLen("ciao")) //5
 
-        val newFun = ::inc on ::strLen
+        val newFun = ::inc compose ::strLen
 
         assertThat(newFun("ciao")).isEqualTo(r)
 
