@@ -5,7 +5,7 @@ import assertk.assertions.isEqualTo
 import org.junit.jupiter.api.Test
 import java.util.*
 
-public class ConsoleTest {
+class ConsoleTest {
 
     val output = ArrayDeque<String>()
     val input = ArrayDeque<String>()
@@ -14,7 +14,7 @@ public class ConsoleTest {
     val pseudoReadline: () -> Console<String> = { Console { input.remove() } }
 
     @Test
-    fun `how can we test the console?`() {
+    fun `Echo Machine repeats every input`() {
 
         val echo = EchoMachine(pseudoPrint, pseudoReadline)
 
@@ -33,7 +33,7 @@ public class ConsoleTest {
 
 
     @Test
-    fun `test a mini cmdline calculator`() {
+    fun `A mini cmdline calculator`() {
         // giving + 1 1
         // should give 2 as result
         val calc = Calculator(pseudoPrint, pseudoReadline)

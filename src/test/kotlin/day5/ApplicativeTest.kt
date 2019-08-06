@@ -2,11 +2,8 @@ package day5
 
 
 import day4.Console
+import day4.question
 
-
-fun qaConsole(showQuestion: Console<Unit>, readAnswer: Console<String>): Console<String> = TODO()
-
-fun question(msg: String): Console<String> = TODO()
 
 data class Person(val name: String, val surname: String, val country: String)
 
