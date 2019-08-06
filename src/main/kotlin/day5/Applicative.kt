@@ -2,6 +2,8 @@ package day5
 
 data class Applicative<T>(val value: T) {
 
+    fun <U> combine(other: Applicative<U>): Applicative<Pair<T, U>> = Applicative(Pair(value, other.value))
+
     fun <R> applyOn(other: Applicative<(T) -> R>): Applicative<R> = Applicative(other.value(this.value))
 }
 

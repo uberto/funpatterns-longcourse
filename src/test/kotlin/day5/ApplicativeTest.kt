@@ -2,14 +2,8 @@ package day5
 
 
 import day4.Console
-import day4.printIO
-import day4.readlineIO
+import day4.question
 
-
-fun qaConsole(showQuestion: Console<Unit>, readAnswer: Console<String>) =
-    Console { showQuestion.andThen(readAnswer).exec() }
-
-fun question(msg: String): Console<String> = qaConsole(printIO(msg), readlineIO())
 
 data class Person(val name: String, val surname: String, val country: String)
 
