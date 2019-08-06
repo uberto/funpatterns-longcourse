@@ -4,6 +4,9 @@ import assertk.assertThat
 import assertk.assertions.isEqualTo
 import org.junit.jupiter.api.Test
 
+
+typealias ConfigReader = Reader<Map<*, String>, String?>
+
 class ConfigReaderTest {
 
     val myConfig = mapOf(
@@ -12,25 +15,25 @@ class ConfigReaderTest {
         "timeout" to "2s"
     )
 
-    data class ConfigReader(val runner: ((String) -> String) -> String): Reader<(String) -> String, String> {
-        override fun ((String) -> String).runReader(f: (String) -> Unit) = TODO()
-
-        override fun ask(context: (String) -> String): String = TODO()
-
-    }
-
     @Test
     fun `read configuration`(){
-        val portR = ConfigReader({it("port")})
-        val timeoutR = ConfigReader({it("timeout")})
+        val portR: ConfigReader = FunReader {it["port"]}
+        val timeoutR: ConfigReader = FunReader {it["timeout"]}
 
-        val context: (String) -> String = myConfig::getValue
-        assertThat(portR.ask(context)).isEqualTo("8080")
+        assertThat(portR.runReader(myConfig)).isEqualTo("8080")
+        assertThat(timeoutR.runReader(myConfig)).isEqualTo("2s")
 
-        with(timeoutR) {
-            context.runReader {
-                assertThat(it).isEqualTo("2s")
             }
+
+
+    @Test
+    fun `read modified configuration`(){
+        val portR: ConfigReader = FunReader{it["port"]}
+        val noPort: ConfigReader = portR.local { myConfig.minus("port") }
+
+        assertThat(portR.runReader(myConfig)).isEqualTo("8080")
+        assertThat(noPort.runReader(myConfig)).isEqualTo(null)
+
         }
-    }
+
 }

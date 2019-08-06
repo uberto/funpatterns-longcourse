@@ -32,7 +32,19 @@ class FileWriter(val fileName: Path): Writer<String> {
 
 
 
-class FileReader(val fileName: Path) {
+class FileReader(val fileName: Path): Reader<Path, List<String>> {
+    operator fun <T> invoke(lineReader: (String) -> T): Outcome<FileError, List<T>> {
 
-    operator fun <T> invoke(lineReader: (String) -> T): Outcome<FileError, List<T>> = TODO()
+        return runCatching {
+            runReader(fileName).map(lineReader)
+        }.fold(
+            {it.asSuccess()},
+            {FileError(fileName, it).asFailure()})
+
+    }
+
+    override fun runReader(context: Path): List<String> = TODO()
+
+    override fun local(f: (Path) -> Path): FileReader = TODO()
+
 }

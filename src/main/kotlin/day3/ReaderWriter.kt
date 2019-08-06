@@ -9,7 +9,7 @@ interface Writer<T> {
 
 interface Reader<C, A> {
 
-    fun C.runReader(f: (A) -> Unit)
-    fun ask(context: C): A
+    fun runReader(context: C): A
 
+    fun local(f: (C) -> C): Reader<C, A>
 }
