@@ -1,7 +1,7 @@
-package dayX.todoapp
+package day7.todoapp
 
 
-import dayX.todoapp.application.TodoApp
+import day7.todoapp.application.TodoApp
 
 fun main() {
 

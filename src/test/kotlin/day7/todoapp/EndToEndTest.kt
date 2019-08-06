@@ -1,4 +1,4 @@
-package dayX.todoapp
+package day7.todoapp
 
 import assertk.Assert
 import assertk.all
@@ -7,7 +7,7 @@ import assertk.assertions.isEqualTo
 import assertk.assertions.support.expected
 import assertk.assertions.support.show
 import com.fasterxml.jackson.databind.JsonNode
-import dayX.todoapp.application.TodoApp
+import day7.todoapp.application.TodoApp
 import org.http4k.client.OkHttp
 import org.http4k.core.Method
 import org.http4k.core.Request

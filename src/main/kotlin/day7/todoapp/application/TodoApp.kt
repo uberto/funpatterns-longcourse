@@ -1,4 +1,4 @@
-package dayX.todoapp.application
+package day7.todoapp.application
 
 import org.http4k.server.Http4kServer
 
