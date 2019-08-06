@@ -12,18 +12,28 @@ class ConfigReaderTest {
         "timeout" to "2s"
     )
 
-    data class ConfigReader(val f: (String) -> String): Reader<String, String> {
+    data class ConfigReader(val runner: ((String) -> String) -> String): Reader<(String) -> String, String> {
+        override fun ((String) -> String).runReader(f: (String) -> Unit) {
+            f(ask(this))
+        }
 
-        override fun ask(what: String): String = f(what)
+        override fun ask(context: (String) -> String): String =  runner(context)
 
     }
 
     @Test
     fun `read configuration`(){
-        val configurator = ConfigReader(myConfig::getValue)
+        val portR = ConfigReader({it("port")})
+        val timeoutR = ConfigReader({it("timeout")})
 
-        assertThat(configurator.ask("port")).isEqualTo("8080")
-        assertThat(configurator.ask("timeout")).isEqualTo("2s")
+        val context: (String) -> String = myConfig::getValue
+        assertThat(portR.ask(context)).isEqualTo("8080")
+
+        with(timeoutR) {
+            context.runReader {
+                assertThat(it).isEqualTo("2s")
+            }
+        }
     }
 
 }

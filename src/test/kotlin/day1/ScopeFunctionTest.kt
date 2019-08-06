@@ -8,10 +8,12 @@ class ScopeFunctionTest{
 
     private fun lastWord(phrase: String) = phrase.lastIndexOf(' ').let { if (it < 0) phrase else phrase.substring(it + 1) }
 
+    private fun firstWord(phrase: String) = phrase.run { substring( 0, indexOf(' ') ) }
+
     @Test
     fun `let pass value and return result`(){
 
-        val res = greetings().let { if(it.contains(' ')) lastWord(it) else it }
+        val res = lastWord("hello world")
 
         assertThat(res).isEqualTo("world")
     }
@@ -21,10 +23,9 @@ class ScopeFunctionTest{
     @Test
     fun `run call value method and return result`(){
 
-        val res = greetings().run { substring( 0, indexOf(' ') ) }
+        val res = firstWord("hello world")
 
         assertThat(res).isEqualTo("hello")
     }
 
-    private fun greetings() = "hello world"
 }

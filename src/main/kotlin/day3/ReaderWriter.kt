@@ -6,7 +6,9 @@ interface Writer<T> {
 }
 
 
-interface Reader<T, U> {
-    fun ask(what: T): U
-}
+interface Reader<C, A> {
 
+    fun C.runReader(f: (A) -> Unit)
+    fun ask(context: C): A
+
+}
