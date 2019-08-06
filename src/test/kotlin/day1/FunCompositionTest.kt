@@ -18,7 +18,7 @@ class FunCompositionTest {
 
         val r = inc(double(5)) //11
 
-        val newFun = ::inc on ::double
+        val newFun = ::inc combine ::double
 
         assertThat(newFun(5)).isEqualTo(r)
 
@@ -29,7 +29,7 @@ class FunCompositionTest {
 
         val r = inc(strLen("ciao")) //5
 
-        val newFun = ::inc on ::strLen
+        val newFun = ::inc combine ::strLen
 
         assertThat(newFun("ciao")).isEqualTo(r)
 
