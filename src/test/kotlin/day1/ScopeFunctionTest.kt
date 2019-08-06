@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 
 class ScopeFunctionTest {
 
-    //implement them in one line (using indexOf)
+    //implement them in one line (using lastIndexOf or indexOf)
 
     private fun lastWord(phrase: String): String {
         val lastSpace = phrase.lastIndexOf(' ')
