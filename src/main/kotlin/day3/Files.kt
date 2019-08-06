@@ -1,6 +1,11 @@
 package day3
 
-import java.nio.file.Path
+import java.io.File
+
+
+data class Path(val path: String) {
+    fun toFile(): File = File(path)
+}
 
 
 data class FileError(val fileName: Path, val exception: Throwable?) : Error {

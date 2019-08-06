@@ -5,14 +5,13 @@ import assertk.assertions.isEqualTo
 import assertk.assertions.isInstanceOf
 import day2.nextOrNull
 import org.junit.jupiter.api.Test
-import java.nio.file.Path
 
 class FilesTest {
 
     val names = listOf("Frank", "John", "Mary", "Ann", "Fred", "Andy")
 
 
-    private val filePath = Path.of("./names.txt")
+    private val filePath = Path("./names.txt")
 
     @Test
     fun `write a file`() {
