@@ -35,23 +35,19 @@ class FileWriter(val fileName: Path): Writer<String> {
 
 
 
-class FileReader(val fileName: Path) {
-
+class FileReader(val fileName: Path): Reader<Path, List<String>> {
     operator fun <T> invoke(lineReader: (String) -> T): Outcome<FileError, List<T>> {
 
         return runCatching {
-            runReader(lineReader)
+            runReader(fileName).map(lineReader)
         }.fold(
             {it.asSuccess()},
             {FileError(fileName, it).asFailure()})
 
     }
 
-    fun <U> runReader(lineReader: (String) -> U): List<U> {
-        val collector = mutableListOf<U>()
-        fileName.toFile().reader().forEachLine {
-            collector.add(lineReader(it))
-        }
-        return collector
-    }
+    override fun runReader(context: Path): List<String> = context.toFile().readLines()
+
+    override fun local(f: (Path) -> Path): FileReader = FileReader( f( fileName) )
+
 }
