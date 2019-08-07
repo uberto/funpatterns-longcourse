@@ -13,5 +13,5 @@ tailrec fun collatzR(acc: List<Int>, x: Int): List<Int> =
 
 var hiddenX = 1
 fun collatzMax(): Sequence<Int> = generateSequence {
-    hiddenX.collatz().max().also { hiddenX += 1 }
+    hiddenX++.collatz().max()
 }
