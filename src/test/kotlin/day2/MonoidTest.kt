@@ -20,4 +20,22 @@ class MonoidTest {
         }
     }
 
+
+    @Test
+    fun `Monoid fold also business types`() {
+        with(Monoid(zeroMoney, Money::sum)) {
+            assertThat(listOf(Money(2.1), Money(3.9), Money(4.0)).fold()).isEqualTo(Money(10.0))
+        }
+    }
+
+    private val zeroMoney = Money(0.0)
+
+    data class Money(val amount: Double){
+
+        fun sum(other: Money) = Money(this.amount + other.amount)
+    }
 }
+
+
+
+
