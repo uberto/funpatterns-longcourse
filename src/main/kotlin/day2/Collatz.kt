@@ -1,15 +1,17 @@
 package day2
 
 
-fun Int.collatz(): List<Int> = listOf(this) + if (this % 2 == 0) evenCase(this) else oddCase(this)
+fun Int.collatz() = collatzR(listOf(), this)
 
-private fun evenCase(n: Int) = (n / 2).collatz()
-private fun oddCase(n: Int) = if (n == 1) listOf() else (n * 3 + 1).collatz()
+tailrec fun collatzR(acc: List<Int>, x: Int): List<Int> =
+    when {
+        x == 1 -> acc.plus(x)
+        x % 2 == 0 -> collatzR(acc.plus(x), x / 2)
+        else -> collatzR(acc.plus(x), x * 3 + 1)
+    }
 
 
-
-
-var x = 1
+var hiddenX = 1
 fun collatzMax(): Sequence<Int> = generateSequence {
-    x.collatz().max().also { x += 1 }
+    hiddenX.collatz().max().also { hiddenX += 1 }
 }

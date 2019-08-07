@@ -23,11 +23,11 @@ class CollatzConjectureTest {
     @Test
     fun `generate the series of max value in the collatz series for each number`() {
 
-        assertThat(collatzMax().take(11).toList().max()).isEqualTo(52)
+        assertThat(collatzMax().take(11).max()).isEqualTo(52)
 
-        assertThat(collatzMax().take(101).toList().max()).isEqualTo(9232)
+        assertThat(collatzMax().take(101).max()).isEqualTo(9232)
 
-        assertThat(collatzMax().take(1001).toList().max()).isEqualTo(250504)
+        assertThat(collatzMax().take(1001).max()).isEqualTo(250504)
 
     }
 
