@@ -12,8 +12,8 @@ interface DbAccess {
 
     fun User.update(): Outcome<DbError, Unit>
 
-    fun Order.create(): Outcome<DbError, OrderId>
+    fun Order.write(): Outcome<DbError, OrderId>
 
-    fun User.create(): Outcome<DbError, UserId>
+    fun User.write(): Outcome<DbError, UserId>
 
 }

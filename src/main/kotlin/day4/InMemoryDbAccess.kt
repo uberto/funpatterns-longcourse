@@ -33,14 +33,14 @@ data class InMemoryDbAccess(private val orders: MutableList<Order>, private val 
             DbError("Updated failed: ${it.msg}")
         }
 
-    override fun Order.create(): Outcome<DbError, OrderId> =
+    override fun Order.write(): Outcome<DbError, OrderId> =
         orders.firstOrNull { it.id == this.id }?.let {
             DbError("User already exists $it").asFailure()
         } ?: orders.add(this).let {
             this.id.asSuccess()
         }
 
-    override fun User.create(): Outcome<DbError, UserId> =
+    override fun User.write(): Outcome<DbError, UserId> =
         users.firstOrNull { it.id == this.id }?.let {
             DbError("User already exists $it").asFailure()
         } ?: users.add(this).let {
