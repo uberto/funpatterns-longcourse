@@ -22,7 +22,7 @@ class FileWriter(val fileName: Path) : Writer<String> {
             FileError(fileName, it.t)
         }
 
-    override fun runWriter(f: () -> String?): Unit = TODO()
+    override fun runWriter(f: () -> String?): Unit = TODO("it needs to call f() until the result is a null")
 }
 
 
