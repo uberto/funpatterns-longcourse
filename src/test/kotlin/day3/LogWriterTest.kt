@@ -24,8 +24,6 @@ class LogWriterTest {
         assertThat(myLogs.toList()).isEqualTo(listOf("Log this", "Log that"))
     }
 
-
-
     private fun application(logger: Writer<String>) {
         logger.runWriter { "Log this" }
         logger.runWriter { "Log that" }

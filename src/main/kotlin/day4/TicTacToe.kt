@@ -35,6 +35,18 @@ data class TicTacToe(private val pastMoves: List<Move>) {
         Pos(Row.Bottom, col).sign()
     )
 
+    fun slashDiag(): List<Sign?> = listOf(
+        Pos(Row.Top, Col.Right).sign(),
+        Pos(Row.Middle, Col.Center).sign(),
+        Pos(Row.Bottom, Col.Left).sign()
+    )
+
+    fun revSlashDiag(): List<Sign?> = listOf(
+        Pos(Row.Top, Col.Left).sign(),
+        Pos(Row.Middle, Col.Center).sign(),
+        Pos(Row.Bottom, Col.Right).sign()
+    )
+
     fun render(): String = listOf(
         renderRow(Row.Top),
         renderRow(Row.Middle),
@@ -43,7 +55,7 @@ data class TicTacToe(private val pastMoves: List<Move>) {
 
     private fun renderRow(r: Row) = " " + row(r).map { it.render() }.joinToString(separator = " | ")
 
-    fun placeMove(move: Move): TicTacToe? =
+    fun place(move: Move): TicTacToe? =
         if (move.coord.sign() == null)
             TicTacToe(pastMoves + move)
         else
@@ -58,14 +70,17 @@ data class TicTacToe(private val pastMoves: List<Move>) {
     }
 
     fun fold(moves: List<Move>): TicTacToe? =
-        moves.fold(this as TicTacToe?, { acc, m -> acc?.placeMove(m) })
+        moves.fold(this as TicTacToe?, { acc, m -> acc?.place(m) })
 
-    fun Sign.hasWon(): Boolean {
-        Row.values().map { row(it) }.firstOrNull { it == listOf(this, this, this) }
+    private fun List<Sign?>.winnerStrike(s: Sign): Boolean =
+        this == listOf(s, s, s)
 
+    fun Sign.hasWon(): Boolean =
+        Row.values().map { row(it) }.any { it.winnerStrike(this) }
+                || Col.values().map { col(it) }.any { it.winnerStrike(this) }
+                || slashDiag().winnerStrike(this)
+                || revSlashDiag().winnerStrike(this)
 
-        return false
-    }
 
     fun winner(): Sign? =
         if (Sign.Nought.hasWon())

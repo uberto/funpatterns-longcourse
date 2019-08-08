@@ -23,7 +23,7 @@ class TicTacToeTest {
 
     @Test
     fun `first move`() {
-        val b = TicTacToe.newBoard.placeMove(Move(Middle, Center, Cross))
+        val b = TicTacToe.newBoard.place(Move(Middle, Center, Cross))
         println(b!!.render())
 
         assertThat(b.row(Middle)).isEqualTo(listOf(null, Cross, null))
@@ -54,8 +54,8 @@ class TicTacToeTest {
     @Test
     fun `invalid move return null board`() {
         val b = TicTacToe.newBoard
-            .placeMove(Move(Middle, Center, Cross))
-            ?.placeMove(Move(Middle, Center, Nought))
+            .place(Move(Middle, Center, Cross))
+            ?.place(Move(Middle, Center, Nought))
 
 
         assertThat(b).isNull()
@@ -73,7 +73,27 @@ class TicTacToeTest {
 
         assertThat(b1.winner()).isNull()
 
-        val b2 = b1.placeMove(Move(Bottom, Left, Cross))!!
+        val b2 = b1.place(Move(Bottom, Center, Cross))!!
         assertThat(b2.winner()).isEqualTo(Cross)
+
+        println(b2.render())
+    }
+
+
+    @Test
+    fun `get winner in diagonals`() {
+        val moves = listOf(
+            Move(Middle, Center, Cross),
+            Move(Top, Center, Nought),
+            Move(Middle, Left, Cross),
+            Move(Middle, Right, Nought),
+            Move(Top, Left, Cross),
+            Move(Bottom, Left, Nought),
+            Move(Bottom, Right, Cross)
+        )
+        val b = TicTacToe.newBoard.fold(moves)!!
+        println(b.render())
+        assertThat(b.winner()).isEqualTo(Cross)
+
     }
 }
