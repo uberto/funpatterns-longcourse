@@ -19,7 +19,6 @@ data class Move(val row: Row, val col: Col, val sign: Sign) {
 
 data class Pos(val row: Row, val col: Col)
 
-
 data class TicTacToe(private val pastMoves: List<Move>) {
 
     fun row(row: Row): List<Sign?> = listOf(
@@ -27,7 +26,6 @@ data class TicTacToe(private val pastMoves: List<Move>) {
         Pos(row, Col.Center).sign(),
         Pos(row, Col.Right).sign()
     )
-
 
     fun col(col: Col): List<Sign?> = listOf(
         Pos(Row.Top, col).sign(),
@@ -47,13 +45,22 @@ data class TicTacToe(private val pastMoves: List<Move>) {
         Pos(Row.Bottom, Col.Right).sign()
     )
 
+    private fun renderRow(r: Row) = " " + row(r).map { it.render() }.joinToString(separator = " | ")
+
+    private fun List<Sign?>.winnerStrike(s: Sign): Boolean =
+        this == listOf(s, s, s)
+
+    private fun Sign.hasWon(): Boolean =
+        Row.values().map { row(it) }.any { it.winnerStrike(this) }
+                || Col.values().map { col(it) }.any { it.winnerStrike(this) }
+                || slashDiag().winnerStrike(this)
+                || revSlashDiag().winnerStrike(this)
+
     fun render(): String = listOf(
         renderRow(Row.Top),
         renderRow(Row.Middle),
         renderRow(Row.Bottom)
     ).joinToString("\n---+---+---\n")
-
-    private fun renderRow(r: Row) = " " + row(r).map { it.render() }.joinToString(separator = " | ")
 
     fun place(move: Move): TicTacToe? =
         if (move.coord.sign() == null)
@@ -71,15 +78,6 @@ data class TicTacToe(private val pastMoves: List<Move>) {
 
     fun fold(moves: List<Move>): TicTacToe? =
         moves.fold(this as TicTacToe?, { acc, m -> acc?.place(m) })
-
-    private fun List<Sign?>.winnerStrike(s: Sign): Boolean =
-        this == listOf(s, s, s)
-
-    fun Sign.hasWon(): Boolean =
-        Row.values().map { row(it) }.any { it.winnerStrike(this) }
-                || Col.values().map { col(it) }.any { it.winnerStrike(this) }
-                || slashDiag().winnerStrike(this)
-                || revSlashDiag().winnerStrike(this)
 
 
     fun winner(): Sign? =
