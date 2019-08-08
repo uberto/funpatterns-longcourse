@@ -16,24 +16,24 @@ class ConfigReaderTest {
     )
 
     @Test
-    fun `read configuration`(){
-        val portR: ConfigReader = FunReader {it["port"]}
-        val timeoutR: ConfigReader = FunReader {it["timeout"]}
+    fun `read configuration`() {
+        val portR: ConfigReader = FunReader { it["port"] }
+        val timeoutR: ConfigReader = FunReader { it["timeout"] }
 
         assertThat(portR.runReader(myConfig)).isEqualTo("8080")
         assertThat(timeoutR.runReader(myConfig)).isEqualTo("2s")
 
-            }
+    }
 
 
     @Test
-    fun `read modified configuration`(){
-        val portR: ConfigReader = FunReader{it["port"]}
-        val noPort: ConfigReader = portR.local { myConfig.minus("port") }
+    fun `read modified configuration`() {
+        val portR: ConfigReader = FunReader { it["port"] }
+        val noPort: ConfigReader = portR.local { it.minus("port") }
 
         assertThat(portR.runReader(myConfig)).isEqualTo("8080")
         assertThat(noPort.runReader(myConfig)).isEqualTo(null)
 
-        }
+    }
 
 }

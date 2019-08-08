@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 
 class LogWriterTest {
 
-    data class Logger(val lines: MutableList<String>) : Writer<String> {
+    data class InMemoryLogger(val lines: MutableList<String>) : Writer<String> {
         override fun runWriter(f: () -> String?) {
             TODO()
         }
@@ -17,11 +17,17 @@ class LogWriterTest {
 
         val myLogs = mutableListOf<String>()
 
-        val logger = Logger(myLogs)
+        val logger = InMemoryLogger(myLogs)
 
-        logger.runWriter { "Log this" }
-        logger.runWriter { "Log that" }
+        application(logger)
 
         assertThat(myLogs.toList()).isEqualTo(listOf("Log this", "Log that"))
+    }
+
+
+
+    private fun application(logger: Writer<String>) {
+        logger.runWriter { "Log this" }
+        logger.runWriter { "Log that" }
     }
 }

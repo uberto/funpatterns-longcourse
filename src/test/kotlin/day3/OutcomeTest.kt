@@ -34,7 +34,7 @@ class OutcomeTest {
     fun `map results`() {
         val amount: Double = readOrderFromDb(existingOrderId)
             .map { o -> o.amount }
-            .onFailure { return }
+            .onFailure { fail("order not exists") }
 
         assertThat(amount).isEqualTo(123.4)
     }

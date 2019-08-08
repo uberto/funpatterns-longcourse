@@ -1,8 +1,7 @@
 package day3
 
 
-sealed class  Outcome<out E: Error, out T: Any> {
-
+sealed class Outcome<out E: Error, out T: Any> {
 
     fun <U: Any> map(f: (T) -> U): Outcome<E, U> = TODO()
 
@@ -16,6 +15,8 @@ sealed class  Outcome<out E: Error, out T: Any> {
 data class Success<T: Any>(val value: T): Outcome<Nothing, T>()
 data class Failure<E: Error>(val error: E): Outcome<E, Nothing>()
 
+
+fun <T: Any, U: Any, E: Error> Outcome<E, T>.lift(f: (T) -> U): (Outcome<E, T>) -> Outcome<E, U> = TODO()
 
 inline fun <T: Any, U: Any, E: Error> Outcome<E, T>.flatMap(f: (T) -> Outcome<E, U>): Outcome<E, U> = TODO()
 
