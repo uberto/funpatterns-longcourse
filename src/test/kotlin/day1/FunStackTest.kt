@@ -16,7 +16,7 @@ class FunStackTest (){
 
     @Test
     fun `pop decrease the size and return the last pushed value`(){
-        val (stack, c) = FunStack<Char>().push('Q').pop()
+        val (c, stack) = FunStack<Char>().push('Q').pop()
 
         assertThat(stack.size()).isEqualTo(0)
         assertThat(c).isEqualTo('Q')
@@ -24,7 +24,7 @@ class FunStackTest (){
 
     @Test
     fun `pop return null when stack is empty`(){
-        val (stack, c) = FunStack<Char>().pop()
+        val (c, stack) = FunStack<Char>().pop()
 
         assertThat(stack.size()).isEqualTo(0)
         assertThat(c).isNull()
@@ -36,8 +36,8 @@ class FunStackTest (){
 
         val s1 = s0.push('A')
         val s2 = s1.push('B')
-        val (s3, b) = s2.pop()
-        val (s4, a) = s3.pop()
+        val (b,s3) = s2.pop()
+        val (a, s4) = s3.pop()
 
         assertThat(b).isEqualTo('B')
         assertThat(a).isEqualTo('A')
