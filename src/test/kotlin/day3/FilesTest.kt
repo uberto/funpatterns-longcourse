@@ -10,7 +10,6 @@ class FilesTest {
 
     val names = listOf("Frank", "John", "Mary", "Ann", "Fred", "Andy")
 
-
     private val filePath = Path("./names.txt")
 
     @Test
@@ -22,12 +21,11 @@ class FilesTest {
 
         val res = fw { lines.nextOrNull() }
 
-        assertThat( res).isInstanceOf(Success::class)
+        assertThat(res).isInstanceOf(Success::class)
 
-        assertThat(names).isEqualTo( filePath.toFile().readLines())
+        assertThat(names).isEqualTo(filePath.toFile().readLines())
 
     }
-
 
 
     @Test
@@ -35,9 +33,9 @@ class FilesTest {
 
         val fr = FileReader(filePath)
 
-        val res = fr{it}
+        val res = fr { it }
 
-        assertThat( res).isEqualTo(Success(names))
+        assertThat(res).isEqualTo(Success(names))
 
     }
 }
