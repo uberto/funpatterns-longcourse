@@ -4,6 +4,8 @@ import assertk.assertThat
 import assertk.assertions.doesNotContain
 import assertk.assertions.isEqualTo
 import assertk.assertions.isNull
+import day4.Col.*
+import day4.Row.*
 import day4.Sign.Cross
 import day4.Sign.Nought
 import org.junit.jupiter.api.Test
@@ -11,51 +13,67 @@ import org.junit.jupiter.api.Test
 class TicTacToeTest {
 
     @Test
-    fun `empty board`(){
+    fun `empty board`() {
         val b = TicTacToe.newBoard
-        assertThat( b.render() ).doesNotContain("X")
-        assertThat( b.render() ).doesNotContain("O")
+        assertThat(b.render()).doesNotContain("X")
+        assertThat(b.render()).doesNotContain("O")
 
-        assertThat( b.row(Row.Middle)).isEqualTo(listOf(null, null, null))
+        assertThat(b.row(Middle)).isEqualTo(listOf(null, null, null))
     }
 
     @Test
-    fun `first move`(){
-        val b = TicTacToe.newBoard.placeMove(MiddleCenter(Cross))
-        println( b!!.render() )
+    fun `first move`() {
+        val b = TicTacToe.newBoard.placeMove(Move(Middle, Center, Cross))
+        println(b!!.render())
 
-        assertThat( b.row(Row.Middle)).isEqualTo(listOf(null, Cross, null))
-        assertThat( b.col(Col.Center)).isEqualTo(listOf(null, Cross, null))
+        assertThat(b.row(Middle)).isEqualTo(listOf(null, Cross, null))
+        assertThat(b.col(Center)).isEqualTo(listOf(null, Cross, null))
     }
 
     @Test
-    fun `fold moves`(){
+    fun `fold moves`() {
 
         val moves = listOf(
-            MiddleCenter(Cross),
-            TopLeft(Nought),
-            TopCenter(Cross),
-            BottomCenter(Nought),
-            MiddleLeft(Cross),
-            MiddleRight(Nought),
-            TopRight(Cross),
-            BottomLeft(Nought)
+            Move(Middle, Center, Cross),
+            Move(Top, Left, Nought),
+            Move(Top, Center, Cross),
+            Move(Bottom, Center, Nought),
+            Move(Middle, Left, Cross),
+            Move(Middle, Right, Nought),
+            Move(Top, Right, Cross),
+            Move(Bottom, Left, Nought)
         )
         val b = TicTacToe.newBoard.fold(moves)
-        println( b!!.render() )
+        println(b!!.render())
 
-        assertThat( b.row(Row.Top)).isEqualTo(listOf(Nought, Cross, Cross))
-        assertThat( b.row(Row.Middle)).isEqualTo(listOf(Cross, Cross, Nought))
-        assertThat( b.row(Row.Bottom)).isEqualTo(listOf(Nought, Nought, null))
+        assertThat(b.row(Top)).isEqualTo(listOf(Nought, Cross, Cross))
+        assertThat(b.row(Middle)).isEqualTo(listOf(Cross, Cross, Nought))
+        assertThat(b.row(Bottom)).isEqualTo(listOf(Nought, Nought, null))
     }
 
     @Test
-    fun `invalid move return null board`(){
+    fun `invalid move return null board`() {
         val b = TicTacToe.newBoard
-            .placeMove(MiddleCenter(Cross))
-            ?.placeMove(MiddleCenter(Nought))
+            .placeMove(Move(Middle, Center, Cross))
+            ?.placeMove(Move(Middle, Center, Nought))
 
 
-        assertThat( b).isNull()
+        assertThat(b).isNull()
+    }
+
+    @Test
+    fun `get winner`() {
+        val moves = listOf(
+            Move(Middle, Center, Cross),
+            Move(Top, Left, Nought),
+            Move(Top, Center, Cross),
+            Move(Bottom, Left, Nought)
+        )
+        val b1 = TicTacToe.newBoard.fold(moves)!!
+
+        assertThat(b1.winner()).isNull()
+
+        val b2 = b1.placeMove(Move(Bottom, Left, Cross))!!
+        assertThat(b2.winner()).isEqualTo(Cross)
     }
 }
