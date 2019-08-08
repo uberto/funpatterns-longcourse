@@ -14,18 +14,13 @@ data class FileError(val fileName: Path, val exception: Throwable?) : Error {
 }
 
 
-class FileWriter(val fileName: Path): Writer<String> {
-    operator fun invoke(writeLine: () -> String?): Outcome<FileError, Unit> {
-
-        runCatching {
+class FileWriter(val fileName: Path) : Writer<String> {
+    operator fun invoke(writeLine: () -> String?): Outcome<FileError, Unit> =
+        Outcome.tryThis {
             runWriter(writeLine)
-        }.onFailure {
-            return FileError(fileName, it).asFailure()
+        }.mapFailure {
+            FileError(fileName, it.t)
         }
-
-        return Unit.asSuccess()
-
-    }
 
     override fun runWriter(f: () -> String?) {
         fileName.toFile().writer().use {
@@ -39,20 +34,17 @@ class FileWriter(val fileName: Path): Writer<String> {
 }
 
 
-
-class FileReader(val fileName: Path): Reader<Path, List<String>> {
-    operator fun <T> invoke(lineReader: (String) -> T): Outcome<FileError, List<T>> {
-
-        return runCatching {
+class FileReader(val fileName: Path) : Reader<Path, List<String>> {
+    operator fun <T> invoke(lineReader: (String) -> T): Outcome<FileError, List<T>> =
+        Outcome.tryThis {
             runReader(fileName).map(lineReader)
-        }.fold(
-            {it.asSuccess()},
-            {FileError(fileName, it).asFailure()})
+        }.mapFailure {
+            FileError(fileName, it.t)
+        }
 
-    }
 
     override fun runReader(context: Path): List<String> = context.toFile().readLines()
 
-    override fun local(f: (Path) -> Path): FileReader = FileReader( f( fileName) )
+    override fun local(f: (Path) -> Path): FileReader = FileReader(f(fileName))
 
 }
