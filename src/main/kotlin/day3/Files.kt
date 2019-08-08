@@ -23,12 +23,10 @@ class FileWriter(val fileName: Path) : Writer<String> {
         }
 
     override fun runWriter(f: () -> String?) {
-        fileName.toFile().writer().use {
+        fileName.toFile().writer().use { w->
 
-            while (true) {
-                val line = f() ?: return@use
-                it.append("$line\n")
-            }
+           generateSequence(f).forEach { w.append("$it\n") }
+
         }
     }
 }
