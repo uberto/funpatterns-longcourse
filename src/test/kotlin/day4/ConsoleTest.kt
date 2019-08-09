@@ -34,23 +34,39 @@ class ConsoleTest {
 
     @Test
     fun `A mini cmdline calculator`() {
-        // giving + 1 1
-        // should give 2 as result
         val calc = Calculator(pseudoPrint, pseudoReadline)
 
-        input.add("+ 3 4")
-        input.add("* 5 6")
-        input.add("@ 7 8")
+        input.add("3 4 5 + *")
 
         calc()
+
+        assertThat(output.remove()).isEqualTo("27.0")
+
+    }
+
+    @Test
+    fun `Many inputs give many results`() {
+        val calc = Calculator(pseudoPrint, pseudoReadline)
+
+        input.add("3 4 +")
+        input.add("5 6 *")
+
         calc()
         calc()
 
         assertThat(output.remove()).isEqualTo("7.0")
         assertThat(output.remove()).isEqualTo("30.0")
-        assertThat(output.remove()).isEqualTo("Unknown operation @")
     }
 
+    @Test
+    fun `Errors give messages`() {
+        val calc = Calculator(pseudoPrint, pseudoReadline)
+
+        input.add("5 6 @")
+
+        calc()
+        assertThat(output.remove()).isEqualTo("Unknown operation @")
+    }
 
 
 }

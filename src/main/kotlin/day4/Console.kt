@@ -29,7 +29,6 @@ val reader =  BufferedReader( InputStreamReader(System.`in`))
 fun readlineIO() = Console<String> { reader.readLine() }
 
 
-fun qaConsole(showQuestion: Console<Unit>, readAnswer: Console<String>) =
-    Console { showQuestion.andThen(readAnswer).exec() }
+fun qaConsole(showQuestion: Console<Unit>, readAnswer: Console<String>): Console<String> = TODO()
 
 fun question(msg: String): Console<String> = qaConsole(printIO(msg), readlineIO())
