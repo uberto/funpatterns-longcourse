@@ -31,18 +31,14 @@ class StateTest() {
     @Test
     fun `push pop push push`() {
 
-        val r = push(123)
-            .flatMap {
-                pop()
-                    .flatMap {
-                        assertThat(it).isEqualTo(123)
+        val r =
+            push(123).flatMap {
+            pop().flatMap {
+            assertThat(it).isEqualTo(123)
 
-                        push(42)
-                            .flatMap {
-                                push(96)
-                            }
-                    }
-            }.exec(FunStack())
+            push(42).flatMap {
+            push(96)
+        }}}.exec(FunStack())
 
         println("r $r")
 
