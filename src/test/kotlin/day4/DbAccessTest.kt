@@ -15,7 +15,7 @@ class DbAccessTest {
 
     fun DbAccess.getUserNameFromOrder(orderId: OrderId): Outcome<DbError, String> = TODO("implement it with flatmap")
 
-    fun DbAccess.duplicateOrderWithSameAmountAndNewUser(orderId: OrderId, userId: UserId): Outcome<DbError, OrderId> =
+    fun DbAccess.newOrderWithAmountFromAnotherOrderAndUserFromUserId(orderId: OrderId, userId: UserId): Outcome<DbError, OrderId> =
         TODO("implement it with flatmap")
 
     private fun preparedDb() =
@@ -43,7 +43,7 @@ class DbAccessTest {
     fun `duplicate order with same amount a new user`() {
 
         with(preparedDb()) {
-            val newId = duplicateOrderWithSameAmountAndNewUser(OrderId(1), UserId(2))
+            val newId = newOrderWithAmountFromAnotherOrderAndUserFromUserId(OrderId(1), UserId(2))
 
             newId.map {
                 val o = it.read().expectSuccess()

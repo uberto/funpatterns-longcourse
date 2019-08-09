@@ -12,4 +12,8 @@ interface DbAccess {
 
     fun User.write(): Outcome<DbError, UserId>
 
+    fun nextUserId(): UserId
+
+    fun nextOrderId(): OrderId
+
 }
